@@ -1,38 +1,30 @@
-# expense-tracker
-A simple expense tracker built to practice Git, testing, Docker, and CI/CD
+# Expense Tracker
 
+A React application for managing personal expenses in ILS.
 
-## Project board
-
-[Trello - Expense Tracker](https://trello.com/b/eGoIHmmw/expense-tracker)
-
-## Technical plan
-
-### Technologies
-- React with JavaScript for the user interface.
-- CSS for styling.
-- localStorage for saving expenses in the browser.
-- No custom backend or database.
-
-### Main features
+## Features
 - Add, view, edit and delete expenses.
 - Filter expenses by category.
-- Display the total amount of the visible expenses.
+- Display the total of visible expenses.
+- Save expenses in localStorage.
 
-### Expense fields
-- id: a unique identifier.
-- description: a required description.
-- amount: a positive amount in ILS.
-- category: Food, Transport, Home, Entertainment or Other.
-- date: a valid date.
+## Technologies
+React, JavaScript, Vite and styled-components.
+No custom backend or database.
 
-### Planned code structure
-- src/components/: React components.
-- src/utils/: validation, filtering and calculation functions.
-- src/storage/: functions for reading and saving expenses.
-- src/: application entry files and styles.
+## Run locally
+Requires Node.js and npm.
 
-### Storage limitations
-- Expenses are saved in the same browser and site address.
-- Data is not automatically shared between computers.
-- Clearing the site's browser data removes the saved expenses.
+npm install
+npm run dev
+
+## Checks
+npm run lint
+npm run build
+
+## Storage
+Data is saved in the same browser and site address.
+Clearing site data removes saved expenses.
+
+## Project board
+[Trello - Expense Tracker](https://trello.com/b/eGoIHmmw/expense-tracker)
