@@ -19,6 +19,7 @@ npm install
 npm run dev
 
 ## Checks
+npm test
 npm run lint
 npm run build
 
