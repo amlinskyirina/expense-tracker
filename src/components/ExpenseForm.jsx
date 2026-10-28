@@ -109,16 +109,19 @@ function ExpenseForm({
     const cleanDescription = description.trim();
     const numberAmount = Number(amount);
 
+    // בדיקת התיאור
     if (cleanDescription === "") {
       setErrorMessage("יש למלא תיאור להוצאה.");
       return;
     }
 
+    // בדיקת הסכום
     if (!Number.isFinite(numberAmount) || numberAmount <= 0) {
       setErrorMessage("יש להזין סכום גדול מאפס.");
       return;
     }
 
+    // בדיקת התאריך
     if (date === "") {
       setErrorMessage("יש לבחור תאריך.");
       return;
@@ -134,7 +137,7 @@ function ExpenseForm({
     // שליחת פרטי ההוצאה ל-App
     onSaveExpense(expenseData);
 
-    // ניקוי השדות
+    // ניקוי השדות והודעת השגיאה
     setDescription("");
     setAmount("");
     setCategory("Food");
@@ -155,7 +158,10 @@ function ExpenseForm({
             type="text"
             placeholder="על מה שילמת?"
             value={description}
-            onChange={(event) => setDescription(event.target.value)}
+            onChange={(event) => {
+              setDescription(event.target.value);
+              setErrorMessage("");
+            }}
           />
         </Field>
 
@@ -167,7 +173,10 @@ function ExpenseForm({
             step="0.01"
             placeholder="0"
             value={amount}
-            onChange={(event) => setAmount(event.target.value)}
+            onChange={(event) => {
+              setAmount(event.target.value);
+              setErrorMessage("");
+            }}
           />
         </Field>
 
@@ -175,7 +184,10 @@ function ExpenseForm({
           קטגוריה
           <select
             value={category}
-            onChange={(event) => setCategory(event.target.value)}
+            onChange={(event) => {
+              setCategory(event.target.value);
+              setErrorMessage("");
+            }}
           >
             <option value="Food">מזון</option>
             <option value="Transport">תחבורה</option>
@@ -190,7 +202,10 @@ function ExpenseForm({
           <input
             type="date"
             value={date}
-            onChange={(event) => setDate(event.target.value)}
+            onChange={(event) => {
+              setDate(event.target.value);
+              setErrorMessage("");
+            }}
           />
         </Field>
       </Fields>
