@@ -29,3 +29,32 @@ Clearing site data removes saved expenses.
 
 ## Project board
 [Trello - Expense Tracker](https://trello.com/b/eGoIHmmw/expense-tracker)
+
+## Dependencies and licenses
+
+Dependencies are listed in package.json.
+Exact dependency versions are recorded in package-lock.json.
+
+Install the recorded versions:
+
+```sh
+npm ci
+```
+
+Third-party license texts and notices for the installed packages
+are collected in ALL_LICENSES.
+Supplementary license sources are stored in license-supplements.
+
+Regenerate the license report after installation:
+
+```sh
+node generate-licenses.cjs
+```
+
+Run the project checks:
+
+```sh
+npm test
+npm run lint
+npm run build
+```
