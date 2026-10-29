@@ -103,3 +103,52 @@ Security checks performed on 2026-10-29:
 
 These checks cover specific risks and do not constitute
 a complete security assessment.
+
+
+## Installation and execution on Ubuntu
+
+Verified on Ubuntu in VirtualBox on 2026-10-29 using:
+- Node.js 22.23.1
+- npm 10.9.8
+
+Git, Node.js and npm must be installed.
+Some dependencies require Node.js 22.22.2 or later within version 22.
+The initial installation with Node.js 22.22.1 produced engine warnings.
+Updating to 22.23.1 resolved these warnings.
+
+Clone the repository and install the locked dependencies:
+
+```sh
+git clone https://github.com/amlinskyirina/expense-tracker.git
+cd expense-tracker
+npm ci
+```
+
+Run the automated checks:
+
+```sh
+npm test
+npm run lint
+npm run build
+```
+
+Start the application:
+
+```sh
+npm run dev
+```
+
+Open the Local URL printed in the terminal in a browser on Ubuntu.
+Keep the terminal running while using the application.
+Press Ctrl+C to stop the development server.
+
+Validation results:
+- Dependency installation completed without engine warnings.
+- All 8 automated tests passed.
+- Lint and production build passed.
+- Adding, displaying, editing and deleting expenses passed in Firefox.
+- An edited expense remained after refreshing the page.
+- A deleted expense did not return after refreshing the page.
+
+Expenses are stored in the browser's localStorage.
+Data is separate between browsers, operating systems and origins.
