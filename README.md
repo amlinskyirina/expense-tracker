@@ -151,4 +151,57 @@ Validation results:
 - A deleted expense did not return after refreshing the page.
 
 Expenses are stored in the browser's localStorage.
-Data is separate between browsers, operating systems and origins.
+Data is separate between browsers, operating systems and origin
+
+## Docker
+
+Build and run from the project directory on Ubuntu:
+
+```sh
+sudo docker build -t expense-tracker:local .
+sudo docker run -d --name expense-tracker -p 127.0.0.1:8080:80 expense-tracker:local
+```
+
+Open http://localhost:8080 in a browser on Ubuntu.
+
+Check container status:
+
+```sh
+sudo docker ps
+```
+
+Stop the container:
+
+```sh
+sudo docker stop expense-tracker
+```
+
+Start the existing container again:
+
+```sh
+sudo docker start expense-tracker
+```
+
+Remove a stopped container and create a new one:
+
+```sh
+sudo docker rm expense-tracker
+sudo docker run -d --name expense-tracker -p 127.0.0.1:8080:80 expense-tracker:local
+```
+
+The Dockerfile builds the application with Node.js and serves
+the production files using Nginx. The final image contains
+the production output, without the source tree or node_modules.
+
+Expense data is stored in the browser's localStorage, outside
+the container. No Docker volume is required for this frontend.
+Use the same browser profile and http://localhost:8080 to retain data.
+Clearing browser storage removes the saved expenses.
+
+Validated on Ubuntu on 2026-10-29:
+- Docker image built successfully.
+- Container ran and the application was accessible.
+- Adding, displaying, editing and deleting expenses passed.
+- An edited expense remained after container removal,
+  recreation and browser refresh.
+- A deleted expense did not return after browser refresh.
