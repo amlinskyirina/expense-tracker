@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 
 import Header from "./components/Header";
 import ExpenseSummary from "./components/ExpenseSummary";
 import ExpenseForm from "./components/ExpenseForm";
 import ExpenseList from "./components/ExpenseList";
+import { logEvent } from "./logger";
 
-// עיצוב בסיסי של הדף
 const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
@@ -57,7 +57,6 @@ function loadExpenses() {
 
     const items = JSON.parse(savedExpenses);
 
-    // בדיקה שהנתונים מתאימים להצגה באפליקציה
     const validCategories = [
       "Food",
       "Transport",
@@ -86,7 +85,7 @@ function loadExpenses() {
       throw new Error("Invalid saved expenses");
     }
 
-    return { items: items, canSave: true };
+    return { items, canSave: true };
   } catch {
     // לא נכתוב מעל מידע שלא הצלחנו לקרוא
     return { items: [], canSave: false };
@@ -106,11 +105,28 @@ function App() {
       : "לא הצלחנו לקרוא את ההוצאות השמורות. השמירה כבויה."
   );
 
+  // מונע לוג הפעלה כפול בעת בדיקת Effects ב־StrictMode
+  const startupLogged = useRef(false);
+
+  useEffect(() => {
+    if (startupLogged.current) {
+      return;
+    }
+
+    startupLogged.current = true;
+    logEvent("APP_STARTED");
+
+    if (!initialData.canSave) {
+      logEvent("STORAGE_READ_FAILED");
+    }
+  }, [initialData.canSave]);
+
   // עדכון הרשימה ושמירתה בדפדפן
   const saveExpenses = (updatedExpenses) => {
     setExpenses(updatedExpenses);
 
     if (!initialData.canSave) {
+      logEvent("STORAGE_WRITE_BLOCKED");
       return;
     }
 
@@ -122,6 +138,8 @@ function App() {
 
       setStorageError("");
     } catch {
+      logEvent("STORAGE_WRITE_FAILED");
+
       setStorageError(
         "השינוי מוצג במסך, אך לא הצלחנו לשמור אותו בדפדפן."
       );
@@ -143,6 +161,7 @@ function App() {
       });
 
       saveExpenses(updatedExpenses);
+      logEvent("EXPENSE_UPDATED");
       setEditingExpense(null);
     } else {
       const newExpense = {
@@ -151,24 +170,25 @@ function App() {
       };
 
       saveExpenses([...expenses, newExpense]);
+      logEvent("EXPENSE_ADDED");
     }
   };
 
-  // בחירת הוצאה לעריכה
   const handleEditExpense = (expense) => {
     setEditingExpense(expense);
+    logEvent("EDIT_STARTED");
   };
 
-  // ביטול עריכה
   const handleCancelEdit = () => {
     setEditingExpense(null);
+    logEvent("EDIT_CANCELLED");
   };
 
-  // מחיקת הוצאה לאחר אישור
   const handleDeleteExpense = (expenseId) => {
     const confirmed = window.confirm("למחוק את ההוצאה?");
 
     if (!confirmed) {
+      logEvent("DELETE_CANCELLED");
       return;
     }
 
@@ -177,13 +197,13 @@ function App() {
     );
 
     saveExpenses(remainingExpenses);
+    logEvent("EXPENSE_DELETED");
 
     if (editingExpense?.id === expenseId) {
       setEditingExpense(null);
     }
   };
 
-  // סינון לפי קטגוריה
   const visibleExpenses = expenses.filter((expense) => {
     return (
       selectedCategory === "All" ||
@@ -191,7 +211,6 @@ function App() {
     );
   });
 
-  // חישוב הסכום של ההוצאות המוצגות
   let total = 0;
 
   for (const expense of visibleExpenses) {
