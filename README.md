@@ -245,3 +245,38 @@ To prepare a release:
 7. Review the notes for accuracy before publishing.
 
 The first release is v1.0.0.
+
+
+## Final validation
+
+Validated from a fresh clone on Ubuntu on 2026-10-29:
+- npm ci completed successfully.
+- npm reported 0 known dependency vulnerabilities.
+- All 8 automated tests passed.
+- ESLint and the production build passed.
+- The application started successfully.
+- Manual checks passed for adding, editing, category filtering,
+  the displayed total, persistence after refresh and deletion.
+- Editing did not create a duplicate expense.
+- A deleted expense did not return after refreshing.
+
+Docker build and container recreation were validated separately,
+as described in the Docker section.
+
+## Project links
+
+- Repository: https://github.com/amlinskyirina/expense-tracker
+- CI results: https://github.com/amlinskyirina/expense-tracker/actions
+- Release v1.0.0: https://github.com/amlinskyirina/expense-tracker/releases/tag/v1.0.0
+- CI implementation: https://github.com/amlinskyirina/expense-tracker/pull/10
+- Intentional CI failure check, closed without merging:
+  https://github.com/amlinskyirina/expense-tracker/pull/11
+- Release preparation: https://github.com/amlinskyirina/expense-tracker/pull/12
+
+## Scope and remaining requirements
+
+Implemented features are listed in the Features section.
+Date filtering and a monthly summary are not implemented.
+Automated coverage reporting and enforcement of a 70% threshold
+are not included.
+Three peer code reviews have not been completed.
