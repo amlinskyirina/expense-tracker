@@ -205,3 +205,22 @@ Validated on Ubuntu on 2026-10-29:
 - An edited expense remained after container removal,
   recreation and browser refresh.
 - A deleted expense did not return after browser refresh.
+## Continuous integration
+
+The GitHub Actions workflow is defined in `.github/workflows/ci.yml`.
+
+For pull requests targeting main and pushes to main, it:
+- Installs dependencies using npm ci.
+- Runs ESLint.
+- Runs the automated tests.
+- Builds the application.
+
+After a push to main, it also builds the Docker image,
+provided all previous checks passed.
+
+A failed check causes the workflow to fail.
+Coverage reporting and the 70% threshold are not included.
+
+To view results, open the repository's Actions tab,
+select a workflow run, then open a job and its steps.
+The Docker image is built for validation and is not published.
