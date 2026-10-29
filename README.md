@@ -280,3 +280,34 @@ Date filtering and a monthly summary are not implemented.
 Automated coverage reporting and enforcement of a 70% threshold
 are not included.
 Three peer code reviews have not been completed.
+
+
+
+
+## Architecture and data model
+
+The application uses React, JavaScript, Vite and styled-components.
+It runs in the browser without a custom backend or database.
+
+Each expense contains:
+- id: a unique identifier.
+- description: a non-empty description.
+- amount: a positive number in ILS.
+- category: Food, Transport, Home, Entertainment or Other.
+- date: a date in YYYY-MM-DD format.
+
+Expenses are stored as JSON in localStorage under the "expenses" key.
+They are loaded when the application starts.
+Use the same browser profile and origin to access saved expenses.
+Clearing site data removes them.
+
+## Source structure
+
+- src/main.jsx: application entry point.
+- src/App.jsx: expense state, storage and application actions.
+- src/components/Header.jsx: application heading.
+- src/components/ExpenseForm.jsx: adding and editing expenses.
+- src/components/ExpenseList.jsx: expense list and category filter.
+- src/components/ExpenseSummary.jsx: total of displayed expenses.
+- src/logger.js: application event logging.
+- src/test/: automated tests and test setup.
