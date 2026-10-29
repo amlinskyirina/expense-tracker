@@ -224,3 +224,24 @@ Coverage reporting and the 70% threshold are not included.
 To view results, open the repository's Actions tab,
 select a workflow run, then open a job and its steps.
 The Docker image is built for validation and is not published.
+
+
+
+
+## Release process
+
+Versions use the MAJOR.MINOR.PATCH format:
+- MAJOR: incompatible changes.
+- MINOR: backward-compatible features.
+- PATCH: backward-compatible fixes.
+
+To prepare a release:
+1. Update the version in package.json and package-lock.json.
+2. Open a pull request and wait for CI checks to pass.
+3. Merge into main and verify the Docker build succeeds.
+4. Create an annotated Git tag on the verified commit.
+5. Push the tag and create a GitHub Release for that tag.
+6. Use Generate release notes to generate notes automatically.
+7. Review the notes for accuracy before publishing.
+
+The first release is v1.0.0.
