@@ -80,3 +80,26 @@ Logs are not saved by the application to a file or localStorage.
 EXPENSE_ADDED, EXPENSE_UPDATED and EXPENSE_DELETED describe
 changes to the displayed list. A separate storage error is logged
 if browser storage cannot be updated.
+
+## Security checks
+
+Run dependency and static code checks:
+
+```sh
+npm audit
+npm run lint
+```
+
+Security checks performed on 2026-10-29:
+- npm audit reported 0 known dependency vulnerabilities.
+- ESLint passed with rules restricting dynamic code execution
+  and direct HTML insertion.
+- No tracked files matched the checked secret-file patterns:
+  .env, .env.*, *.pem, *.key, *.p12, *.pfx and .npmrc.
+  This was a filename check, not a full secret scan.
+- A manual XSS test confirmed that an HTML-like expense
+  description appeared as text before and after a page refresh,
+  without executing the event handler.
+
+These checks cover specific risks and do not constitute
+a complete security assessment.
