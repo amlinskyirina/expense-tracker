@@ -58,3 +58,25 @@ npm test
 npm run lint
 npm run build
 ```
+
+## Application logs
+
+Logs are displayed in the browser Developer Tools Console.
+Open the Console with Ctrl+Shift+J in Chrome on Windows.
+Enable Info, Warnings and Errors in the Console level filter.
+
+Each entry includes:
+- timestamp: UTC time in ISO format.
+- level: info, warn or error.
+- event: event identifier.
+- message: a fixed description.
+
+Logged events include application startup, adding, editing,
+deleting, cancelling actions, validation failures and storage failures.
+
+Expense descriptions, amounts, dates and identifiers are not logged.
+Logs are not saved by the application to a file or localStorage.
+
+EXPENSE_ADDED, EXPENSE_UPDATED and EXPENSE_DELETED describe
+changes to the displayed list. A separate storage error is logged
+if browser storage cannot be updated.

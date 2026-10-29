@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { logEvent } from "../logger";
 
 const FormBox = styled.section`
   background-color: white;
@@ -86,7 +87,6 @@ function ExpenseForm({
   onSaveExpense,
   onCancelEdit,
 }) {
-  // בעריכה מציגים את פרטי ההוצאה שנבחרה
   const [description, setDescription] = useState(
     editingExpense ? editingExpense.description : ""
   );
@@ -109,20 +109,20 @@ function ExpenseForm({
     const cleanDescription = description.trim();
     const numberAmount = Number(amount);
 
-    // בדיקת התיאור
     if (cleanDescription === "") {
+      logEvent("DESCRIPTION_INVALID");
       setErrorMessage("יש למלא תיאור להוצאה.");
       return;
     }
 
-    // בדיקת הסכום
     if (!Number.isFinite(numberAmount) || numberAmount <= 0) {
+      logEvent("AMOUNT_INVALID");
       setErrorMessage("יש להזין סכום גדול מאפס.");
       return;
     }
 
-    // בדיקת התאריך
     if (date === "") {
+      logEvent("DATE_INVALID");
       setErrorMessage("יש לבחור תאריך.");
       return;
     }
@@ -130,14 +130,12 @@ function ExpenseForm({
     const expenseData = {
       description: cleanDescription,
       amount: numberAmount,
-      category: category,
-      date: date,
+      category,
+      date,
     };
 
-    // שליחת פרטי ההוצאה ל-App
     onSaveExpense(expenseData);
 
-    // ניקוי השדות והודעת השגיאה
     setDescription("");
     setAmount("");
     setCategory("Food");
