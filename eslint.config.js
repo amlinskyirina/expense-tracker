@@ -17,5 +17,26 @@ export default defineConfig([
       globals: globals.browser,
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
+    rules: {
+      'no-eval': 'error',
+      'no-implied-eval': 'error',
+      'no-new-func': 'error',
+      'no-script-url': 'error',
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector:
+            "JSXAttribute[name.name='dangerouslySetInnerHTML']",
+          message:
+            'Render user content as text instead of raw HTML.',
+        },
+        {
+          selector:
+            "MemberExpression[property.name=/^(innerHTML|outerHTML)$/][computed=false]",
+          message:
+            'Avoid direct HTML access. Use React rendering or textContent.',
+        },
+      ],
+    },
   },
 ])
